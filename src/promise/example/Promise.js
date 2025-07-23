@@ -1,7 +1,8 @@
-import {writeLine} from "../utils/console/console.js";
-import {randomPoint} from "../classes/math/geometry/Point.js";
-import {Circle} from "../classes/math/geometry/Circle.js";
-import {randomBoolean, randomInt} from "../utils/random/random.js";
+import {randomPoint} from "../../classes/math/geometry/Point.js";
+import {writeLine} from "../../utils/console/console.js";
+import {Circle} from "../../classes/math/geometry/Circle.js";
+import {randomBoolean, randomInt} from "../../utils/random/random.js";
+
 
 const resolveCallback = (min, bound) => {
     let point = randomPoint(min, bound)
@@ -14,7 +15,6 @@ const rejectCallback = radius => {
     writeLine(`rejectCallback => circle = ${circle}`)
     return circle;
 }
-
 const getData = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -26,15 +26,9 @@ const getData = () => {
         }, 2000)
     })
 }
-
-async function main() {
-    try {
-        let result = await getData();
-        resolveCallback(0, result);
-    }
-    catch (radius) {
-        rejectCallback(radius);
-    }
+const main = () => {
+    getData().then(bound => resolveCallback(0, bound))
+        .catch(radius => rejectCallback(radius))
 
     writeLine("main ends...!")
 }
